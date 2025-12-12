@@ -1,26 +1,25 @@
 import { useState } from "react";
 
 const SignupPage = ({ onSignup, onGoLogin }) => {
-  const [email, setEmail] = useState("new.user@team.dev");
-  const [password, setPassword] = useState("choose-strong-password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <div className="grid gap-10 rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-sky-900/30 lg:grid-cols-[1fr,1.1fr]">
       <div className="space-y-4">
         <p className="text-xs uppercase tracking-[0.3em] text-amber-200">
-          Auth
+          Rejoindre l'espace
         </p>
-        <h1 className="text-3xl font-semibold text-white">/api/auth/sign-in</h1>
+        <h1 className="text-3xl font-semibold text-white">Créer un compte</h1>
         <p className="text-sm text-slate-300">
-          Static create-account page. Submit to jump into the projects view and
-          keep exploring the flow.
+          Inscrivez-vous pour gérer vos projets et vos tâches.
         </p>
         <button
           type="button"
           onClick={onGoLogin}
           className="text-xs font-semibold text-slate-200 underline decoration-dotted"
         >
-          Déjà un compte ? Login
+          Déjà un compte ? Se connecter
         </button>
       </div>
 
