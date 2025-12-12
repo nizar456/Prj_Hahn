@@ -1,20 +1,23 @@
 import { useState } from "react";
 
-const CreateTaskPage = ({ project, onCreate, onCancel }) => {
-  const [title, setTitle] = useState("Nouvelle tâche");
-  const [description, setDescription] = useState("Décrivez la tâche...");
-  const [dueDate, setDueDate] = useState("2025-02-20");
-  const [completed, setCompleted] = useState(false);
+const CreateTaskPage = ({
+  project,
+  mode = "create",
+  initialTask,
+  onSubmit,
+  onCancel,
+}) => {
+  const today = new Date().toISOString().slice(0, 10);
+  const [title, setTitle] = useState(initialTask?.title ?? "Nouvelle tâche");
+  const [description, setDescription] = useState(
+    initialTask?.description ?? "Décrivez la tâche..."
+  );
+  const [dueDate, setDueDate] = useState(initialTask?.dueDate ?? today);
+  const [completed, setCompleted] = useState(initialTask?.completed ?? false);
 
   const handleSubmit = () => {
     if (!title.trim()) return;
-    onCreate({
-      title,
-      description,
-      dueDate,
-      completed,
-      project_id: project.id,
-    });
+    onSubmit({ title, description, dueDate, completed });
   };
 
   return (
@@ -22,15 +25,12 @@ const CreateTaskPage = ({ project, onCreate, onCancel }) => {
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-amber-200">
-            Tasks
+            Tâche
           </p>
           <h1 className="text-3xl font-semibold text-white">
-            Ajouter une tâche
+            {mode === "edit" ? "Mettre à jour" : "Ajouter"} une tâche
           </h1>
           <p className="text-sm text-slate-300">Projet: {project.title}</p>
-        </div>
-        <div className="flex gap-2 text-xs font-semibold text-slate-200">
-          <span className="rounded-full bg-slate-800 px-3 py-1">POST</span>
         </div>
       </div>
 
@@ -82,7 +82,7 @@ const CreateTaskPage = ({ project, onCreate, onCancel }) => {
             onClick={handleSubmit}
             className="rounded-xl bg-amber-400 px-4 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-400/30 transition hover:bg-amber-300"
           >
-            Ajouter la tâche
+            {mode === "edit" ? "Mettre à jour" : "Ajouter la tâche"}
           </button>
           <button
             type="button"

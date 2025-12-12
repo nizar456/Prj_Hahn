@@ -1,18 +1,19 @@
 import { useState } from "react";
 
-const CreateProjectPage = ({ currentUser, onCreate, onCancel }) => {
-  const [title, setTitle] = useState("Nouveau projet");
+const CreateProjectPage = ({
+  mode = "create",
+  initialProject,
+  onSubmit,
+  onCancel,
+}) => {
+  const [title, setTitle] = useState(initialProject?.title ?? "Nouveau projet");
   const [description, setDescription] = useState(
-    "Décrivez rapidement ce projet..."
+    initialProject?.description ?? "Décrivez rapidement ce projet..."
   );
 
   const handleSubmit = () => {
     if (!title.trim()) return;
-    onCreate({
-      title,
-      description,
-      user_id: currentUser ? currentUser.id : "u1",
-    });
+    onSubmit({ title, description });
   };
 
   return (
@@ -20,15 +21,14 @@ const CreateProjectPage = ({ currentUser, onCreate, onCancel }) => {
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-amber-200">
-            Projects
+            Projet
           </p>
-          <h1 className="text-3xl font-semibold text-white">Créer un projet</h1>
+          <h1 className="text-3xl font-semibold text-white">
+            {mode === "edit" ? "Mettre à jour" : "Créer"} un projet
+          </h1>
           <p className="text-sm text-slate-300">
             Renseignez un titre et une courte description.
           </p>
-        </div>
-        <div className="flex gap-2 text-xs font-semibold text-slate-200">
-          <span className="rounded-full bg-slate-800 px-3 py-1">POST</span>
         </div>
       </div>
 
@@ -58,7 +58,7 @@ const CreateProjectPage = ({ currentUser, onCreate, onCancel }) => {
             onClick={handleSubmit}
             className="rounded-xl bg-sky-500 px-4 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/30 transition hover:bg-sky-400"
           >
-            Créer le projet
+            {mode === "edit" ? "Mettre à jour" : "Créer le projet"}
           </button>
           <button
             type="button"
