@@ -16,3 +16,6 @@ Small full-stack application that manages Project Tasks.
   - `docker compose up --build`
 - Frontend: http://localhost:4173
 - Backend API: http://localhost:8087/api
+
+## Short Demo Video
+https://www.awesomescreenshot.com/video/47426872?key=54dcb6c7ad50998e5aadc583e6b16e79
