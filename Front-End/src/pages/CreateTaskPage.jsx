@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLanguage } from "../i18n/useLanguage";
 
 const CreateTaskPage = ({
   project,
@@ -7,10 +8,11 @@ const CreateTaskPage = ({
   onSubmit,
   onCancel,
 }) => {
+  const { t } = useLanguage();
   const today = new Date().toISOString().slice(0, 10);
-  const [title, setTitle] = useState(initialTask?.title ?? "Nouvelle tâche");
+  const [title, setTitle] = useState(initialTask?.title ?? t("newTask"));
   const [description, setDescription] = useState(
-    initialTask?.description ?? "Décrivez la tâche..."
+    initialTask?.description ?? t("describeTask")
   );
   const [dueDate, setDueDate] = useState(initialTask?.dueDate ?? today);
   const [completed, setCompleted] = useState(initialTask?.completed ?? false);
@@ -25,18 +27,22 @@ const CreateTaskPage = ({
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-amber-200">
-            Tâche
+            {t("task")}
           </p>
           <h1 className="text-3xl font-semibold text-white">
-            {mode === "edit" ? "Mettre à jour" : "Ajouter"} une tâche
+            {mode === "edit" ? t("updateATask") : t("addATask")}
           </h1>
-          <p className="text-sm text-slate-300">Projet: {project.title}</p>
+          <p className="text-sm text-slate-300">
+            {t("projectLabel")}: {project.title}
+          </p>
         </div>
       </div>
 
       <div className="space-y-4 rounded-2xl border border-slate-800 bg-slate-950/60 p-6">
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-slate-200">Titre</label>
+          <label className="text-sm font-semibold text-slate-200">
+            {t("title")}
+          </label>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -45,7 +51,7 @@ const CreateTaskPage = ({
         </div>
         <div className="space-y-2">
           <label className="text-sm font-semibold text-slate-200">
-            Description
+            {t("description")}
           </label>
           <textarea
             rows={3}
@@ -57,7 +63,7 @@ const CreateTaskPage = ({
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-200">
-              Due date
+              {t("dueDate")}
             </label>
             <input
               type="date"
@@ -73,7 +79,7 @@ const CreateTaskPage = ({
               onChange={(e) => setCompleted(e.target.checked)}
               className="h-4 w-4 rounded border-slate-700 bg-slate-900 text-amber-400 focus:ring-amber-400"
             />
-            Marquer comme terminée
+            {t("markAsCompleted")}
           </label>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -82,14 +88,14 @@ const CreateTaskPage = ({
             onClick={handleSubmit}
             className="rounded-xl bg-amber-400 px-4 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-400/30 transition hover:bg-amber-300"
           >
-            {mode === "edit" ? "Mettre à jour" : "Ajouter la tâche"}
+            {mode === "edit" ? t("updateTheTask") : t("addTheTask")}
           </button>
           <button
             type="button"
             onClick={onCancel}
             className="rounded-xl border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-200 hover:border-slate-500"
           >
-            Annuler
+            {t("cancel")}
           </button>
         </div>
       </div>
