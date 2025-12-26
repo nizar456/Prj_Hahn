@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useLanguage } from "../i18n/LanguageContext";
 
 const SignupPage = ({ onSignup, onGoLogin }) => {
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -8,24 +10,26 @@ const SignupPage = ({ onSignup, onGoLogin }) => {
     <div className="grid gap-10 rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-sky-900/30 lg:grid-cols-[1fr,1.1fr]">
       <div className="space-y-4">
         <p className="text-xs uppercase tracking-[0.3em] text-amber-200">
-          Rejoindre l'espace
+          {t("joinSpace")}
         </p>
-        <h1 className="text-3xl font-semibold text-white">Créer un compte</h1>
-        <p className="text-sm text-slate-300">
-          Inscrivez-vous pour gérer vos projets et vos tâches.
-        </p>
+        <h1 className="text-3xl font-semibold text-white">
+          {t("createAccountTitle")}
+        </h1>
+        <p className="text-sm text-slate-300">{t("signupDescription")}</p>
         <button
           type="button"
           onClick={onGoLogin}
           className="text-xs font-semibold text-slate-200 underline decoration-dotted"
         >
-          Déjà un compte ? Se connecter
+          {t("alreadyAccount")}
         </button>
       </div>
 
       <div className="space-y-6 rounded-2xl border border-slate-800 bg-slate-950/60 p-6">
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-slate-200">Email</label>
+          <label className="text-sm font-semibold text-slate-200">
+            {t("email")}
+          </label>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -34,7 +38,7 @@ const SignupPage = ({ onSignup, onGoLogin }) => {
         </div>
         <div className="space-y-2">
           <label className="text-sm font-semibold text-slate-200">
-            Password
+            {t("password")}
           </label>
           <input
             type="password"
@@ -48,7 +52,7 @@ const SignupPage = ({ onSignup, onGoLogin }) => {
           onClick={() => onSignup({ email, password })}
           className="w-full rounded-xl bg-sky-500 px-4 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/30 transition hover:bg-sky-400"
         >
-          Créer un compte
+          {t("signup")}
         </button>
       </div>
     </div>
