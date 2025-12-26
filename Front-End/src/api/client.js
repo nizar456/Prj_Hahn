@@ -6,6 +6,9 @@ async function request(path, { method = "GET", body, token } = {}) {
     method,
     headers: {
       "Content-Type": "application/json",
+      //Authorization: token ? `Bearer ${token}` : undefined ❌
+      // car Certains serveurs refusent Authorization: undefined
+      // donc avec l'opérateur spread on évite d'envoyer cette clé si token est falsy
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     body: body ? JSON.stringify(body) : undefined,
@@ -24,6 +27,7 @@ async function request(path, { method = "GET", body, token } = {}) {
     throw error;
   }
 
+  //No Content response "204"
   if (res.status === 204) return null;
   return res.json();
 }
@@ -31,31 +35,38 @@ async function request(path, { method = "GET", body, token } = {}) {
 export const api = {
   login: (email, password) =>
     request("/auth/login", { method: "POST", body: { email, password } }),
+  
   signUp: (email, password) =>
     request("/auth/sign-in", { method: "POST", body: { email, password } }),
 
   listProjects: (token) => request("/projects", { token }),
+  
   createProject: (token, payload) =>
     request("/projects", { method: "POST", body: payload, token }),
+  
   updateProject: (token, projectId, payload) =>
     request(`/projects/${projectId}`, { method: "PUT", body: payload, token }),
+  
   deleteProject: (token, projectId) =>
     request(`/projects/${projectId}`, { method: "DELETE", token }),
 
   listTasks: (token, projectId) =>
     request(`/projects/${projectId}/tasks`, { token }),
+  
   createTask: (token, projectId, payload) =>
     request(`/projects/${projectId}/tasks`, {
       method: "POST",
       body: payload,
       token,
     }),
+
   updateTask: (token, projectId, taskId, payload) =>
     request(`/projects/${projectId}/tasks/${taskId}`, {
       method: "PUT",
       body: payload,
       token,
     }),
+
   deleteTask: (token, projectId, taskId) =>
     request(`/projects/${projectId}/tasks/${taskId}`, {
       method: "DELETE",
