@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import "./App.css";
 import { api } from "./api/client";
+import { useLanguage } from "./i18n/useLanguage";
+import LanguageSwitcher from "./components/LanguageSwitcher";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ProjectsPage from "./pages/ProjectsPage";
@@ -9,6 +11,7 @@ import CreateProjectPage from "./pages/CreateProjectPage";
 import CreateTaskPage from "./pages/CreateTaskPage";
 
 const App = () => {
+  const { t } = useLanguage();
   const [view, setView] = useState("login");
   const [token, setToken] = useState(null);
   const [projects, setProjects] = useState([]);
@@ -44,7 +47,7 @@ const App = () => {
     try {
       return await fn();
     } catch (err) {
-      setError(err?.message || "Une erreur est survenue");
+      setError(err?.message || t("errorOccurred"));
       if (err?.status === 401) resetToAuth();
       return null;
     } finally {
@@ -277,15 +280,14 @@ const App = () => {
     if (!currentProject) {
       return (
         <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 text-slate-200">
-          Aucun projet sélectionné. Retournez à la liste pour en créer ou en
-          choisir un.
+          {t("noProjectsYet")}
           <div className="mt-4">
             <button
               type="button"
               onClick={() => setView("projects")}
               className="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 hover:border-sky-400"
             >
-              Retour projets
+              {t("backToProjects")}
             </button>
           </div>
         </div>
@@ -313,11 +315,12 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
+      <LanguageSwitcher />
       <div className="hero-backdrop">
         <div className="hero-content mx-auto max-w-5xl px-6 py-12 space-y-6">
           {loading && (
             <div className="rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-3 text-sm text-slate-200">
-              Chargement...
+              Loading...
             </div>
           )}
           {error && (
