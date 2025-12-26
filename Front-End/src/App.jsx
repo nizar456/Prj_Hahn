@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import "./App.css";
 import { api } from "./api/client";
-import { useLanguage } from "./i18n/LanguageContext";
+import { useLanguage } from "./i18n/useLanguage";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";

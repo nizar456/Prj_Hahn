@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLanguage } from "../i18n/LanguageContext";
+import { useLanguage } from "../i18n/useLanguage";
 
 const LoginPage = ({ onConnect, onGoSignup }) => {
   const { t } = useLanguage();

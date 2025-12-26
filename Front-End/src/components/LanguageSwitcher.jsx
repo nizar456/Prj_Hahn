@@ -1,4 +1,4 @@
-import { useLanguage } from "../i18n/LanguageContext";
+import { useLanguage } from "../i18n/useLanguage";
 
 const LanguageSwitcher = () => {
   const { language, toggleLanguage } = useLanguage();
@@ -12,7 +12,6 @@ const LanguageSwitcher = () => {
       transition hover:border-sky-400 hover:text-white"
       title={language === "fr" ? "Switch to English" : "Passer en Français"}
     >
-      
       <span>{language === "fr" ? "FR" : "EN"}</span>
     </button>
   );
