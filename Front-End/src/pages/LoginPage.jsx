@@ -1,26 +1,25 @@
 import { useState } from "react";
 
 const LoginPage = ({ onConnect, onGoSignup }) => {
-  const [email, setEmail] = useState("samir@product.dev");
-  const [password, setPassword] = useState("super-secret");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <div className="grid gap-10 rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-emerald-900/30 lg:grid-cols-[1fr,1.1fr]">
       <div className="space-y-4">
         <p className="text-xs uppercase tracking-[0.3em] text-amber-200">
-          Auth
+          Bienvenue
         </p>
-        <h1 className="text-3xl font-semibold text-white">/api/auth/login</h1>
+        <h1 className="text-3xl font-semibold text-white">Connexion</h1>
         <p className="text-sm text-slate-300">
-          Static preview of the login flow. Submitting will just take you to
-          projects so you can review the next endpoint.
+          Accédez à vos projets et tâches.
         </p>
         <button
           type="button"
           onClick={onGoSignup}
           className="text-xs font-semibold text-sky-200 underline decoration-dotted"
         >
-          Besoin d'un compte ? Sign up
+          Créer un compte
         </button>
       </div>
 
